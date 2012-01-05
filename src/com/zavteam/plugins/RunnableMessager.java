@@ -21,6 +21,7 @@ public class RunnableMessager implements Runnable {
 				if (player.hasPermission("zavautomessager.see")) {
 					player.sendMessage(plugin.chatString);
 				}
+				plugin.log.info(plugin.chatString);
 			}
 		} else {
 			plugin.getServer().broadcastMessage(plugin.chatString);	
