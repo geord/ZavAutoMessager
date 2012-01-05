@@ -2,7 +2,9 @@
 
 delay: 60 # In Seconds
 
-chatformat: '[ZavAutoMessager] %msg'
+permissions: false # If true, only people with permission can view the message.
+
+chatformat: '[&6ZavAutoMessager&f]: %msg'
 
 messages:
     - '&6Example Message'

@@ -17,6 +17,7 @@ public class Main extends JavaPlugin {
 	public int messageIt;
 	public String chatFormat;
 	public String chatString;
+	public boolean permissionsBV;
 	RunnableMessager rm = new RunnableMessager(this);
 	@Override
 	public void onDisable() {
@@ -31,9 +32,11 @@ public class Main extends JavaPlugin {
 		config.options().copyDefaults(true);
 		messages = config.getStringList("messages");
 		delay = config.getInt("delay", 60);
-		chatFormat = config.getString("chatformat", "[ZavAutoMessager] %msg");
+		chatFormat = config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
 		delay = delay * 20;
+		permissionsBV = config.getBoolean("permissions", false);
 		saveConfig();
+		getCommand("automessager").setExecutor(new Commands(this));
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");
 	}
