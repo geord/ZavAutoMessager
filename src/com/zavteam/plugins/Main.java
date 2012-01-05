@@ -30,9 +30,6 @@ public class Main extends JavaPlugin {
 		config = getConfig();
 		config.options().copyDefaults(true);
 		messages = config.getStringList("messages");
-		for (String message : messages) {
-			message = message.replace("&", "\u00A7");
-		}
 		delay = config.getInt("delay", 60);
 		chatFormat = config.getString("chatformat", "[ZavAutoMessager] %msg");
 		delay = delay * 20;

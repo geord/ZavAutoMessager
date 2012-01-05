@@ -5,6 +5,6 @@ delay: 60 # In Seconds
 chatformat: '[ZavAutoMessager] %msg'
 
 messages:
-    - &6Example Message
-    - Thanks for choosing this plugin :D!
-    - Test Message
+    - '&6Example Message'
+    - 'Thanks for choosing this plugin :D!'
+    - 'Test Message'
