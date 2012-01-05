@@ -1,0 +1,5 @@
+# Default config for ZavAutoMessager.
+delay: 60
+chatformat: '[ZavAutoMessager] %msg'
+messages:
+    - &6Example Message

@@ -12,7 +12,7 @@ public class Main extends JavaPlugin {
 	Random random = new Random();
 	Logger log = Logger.getLogger("Minecraft");
 	protected FileConfiguration config;
-	public List<String> messages = new ArrayList();
+	public List<String> messages = new ArrayList<String>();
 	public int delay;
 	public int messageIt;
 	public String chatFormat;
