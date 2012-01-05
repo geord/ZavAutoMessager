@@ -7,7 +7,9 @@ public class RunnableMessager implements Runnable {
 	}
 	@Override
 	public void run() {
-		plugin.getServer().broadcastMessage(plugin.messages.get(plugin.random.nextInt(plugin.messages.size() + 1)));
+		plugin.messageIt = plugin.random.nextInt(plugin.messages.size()) + 1;
+		plugin.chatString = plugin.chatFormat.replace("%msg", plugin.messages.get(plugin.messageIt));
+		plugin.getServer().broadcastMessage(plugin.chatString);
 		
 	}
 

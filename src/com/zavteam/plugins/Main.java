@@ -14,6 +14,9 @@ public class Main extends JavaPlugin {
 	protected FileConfiguration config;
 	public List<String> messages = new ArrayList();
 	public int delay;
+	public int messageIt;
+	public String chatFormat;
+	public String chatString;
 	RunnableMessager rm = new RunnableMessager(this);
 	@Override
 	public void onDisable() {
@@ -31,6 +34,7 @@ public class Main extends JavaPlugin {
 			message = message.replace("&", "\u00A7");
 		}
 		delay = config.getInt("delay", 60);
+		chatFormat = config.getString("chatformat", "[ZavAutoMessager] %msg");
 		delay = delay * 20;
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");

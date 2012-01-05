@@ -1,0 +1,11 @@
+name: ZavAutoMessager
+
+version: 0.1
+
+description: Automatically send predefined messages to the server.
+
+author: ZavTeam
+
+authors: [zachoooo, javoris767]
+
+main: com.zavteam.plugins.Main
