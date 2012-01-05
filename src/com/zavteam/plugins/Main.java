@@ -36,6 +36,7 @@ public class Main extends JavaPlugin {
 		delay = config.getInt("delay", 60);
 		chatFormat = config.getString("chatformat", "[ZavAutoMessager] %msg");
 		delay = delay * 20;
+		saveConfig();
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");
 	}
