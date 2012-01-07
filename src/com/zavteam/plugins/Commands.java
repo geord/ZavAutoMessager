@@ -17,9 +17,9 @@ public class Commands implements CommandExecutor {
 		if (sender instanceof Player) {
 			if (args.length == 0) {
 				if (sender.hasPermission("zavautomessager.view")) {
-					sender.sendMessage(ChatColor.GOLD + "===== ZavAutoMessager Help =====");
+					sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
 					sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
-					sender.sendMessage(ChatColor.GOLD + "================================");
+					sender.sendMessage(ChatColor.GOLD + "========================================");
 				} else {
 					sender.sendMessage(noPerm);
 				}
