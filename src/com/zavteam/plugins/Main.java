@@ -14,6 +14,7 @@ public class Main extends JavaPlugin {
 	protected FileConfiguration config;
 	public List<String> messages = new ArrayList<String>();
 	public int delay;
+	public boolean messageToggle;
 	public int messageIt;
 	public String chatFormat;
 	public String chatString;
@@ -32,6 +33,7 @@ public class Main extends JavaPlugin {
 		config.options().copyDefaults(true);
 		messages = config.getStringList("messages");
 		delay = config.getInt("delay", 60);
+		messageToggle = config.getBoolean("enabled", true);
 		chatFormat = config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
 		delay = delay * 20;
 		permissionsBV = config.getBoolean("permissions", false);
@@ -39,6 +41,7 @@ public class Main extends JavaPlugin {
 		getCommand("automessager").setExecutor(new Commands(this));
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");
+		log.info(this + ": Sending messages is now set to " + messageToggle);
 	}
 
 }

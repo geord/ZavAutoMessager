@@ -39,21 +39,22 @@ public class Commands implements CommandExecutor {
 					} else {
 						sender.sendMessage(noPerm);
 					}
-				} else if (args.length == 1) {
-					if (args[0].equalsIgnoreCase("on")) {
-						// Get a method
-				} else {
-					sender.sendMessage(noPerm);
+				} else if (args[0].equalsIgnoreCase("on")) {
+					if (sender.hasPermission("zavautomessager.toggle")) {
+						plugin.messageToggle = true;
+					} else {
+						sender.sendMessage(noPerm);
+						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessage is now on");
+					}
+				} else if (args[0].equalsIgnoreCase("off")) {
+					if (sender.hasPermission("zavautomessager.toggle")) {
+						plugin.messageToggle = false;
+						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessage is now off");
+					} else {
+						sender.sendMessage(noPerm);
+					}
 				}
-		}
 			}
-		} else if (args.length == 1) {
-			if (args[0].equalsIgnoreCase("off")) {
-				//taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RunnableMessager(), Interval * 1200, Interval * 1200);
-				//plugin.getServer().getScheduler().cancelTask(taskId);
-		} else {
-			sender.sendMessage(noPerm);
-		}
 		}
 		return false;
 	}

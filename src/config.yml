@@ -1,5 +1,7 @@
 # Default config for ZavAutoMessager.
 
+enabled: true
+
 delay: 60 # In Seconds
 
 permissions: false # If true, only people with permission can view the message.
