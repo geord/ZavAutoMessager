@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 public class Commands implements CommandExecutor {
 	private final static String noPerm = ChatColor.RED + "You do not have permission to do this";
+	//private static int Interval, taskId = -1, counter = 0;
 	public Main plugin;
 	public Commands(Main instance) {
 		plugin = instance;
@@ -19,6 +20,8 @@ public class Commands implements CommandExecutor {
 				if (sender.hasPermission("zavautomessager.view")) {
 					sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
 					sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
+					sender.sendMessage(ChatColor.GOLD + "2. /automessager on - Start the messages");
+					sender.sendMessage(ChatColor.GOLD + "2. /automessager off - Stops the messages");
 					sender.sendMessage(ChatColor.GOLD + "========================================");
 				} else {
 					sender.sendMessage(noPerm);
@@ -36,14 +39,22 @@ public class Commands implements CommandExecutor {
 					} else {
 						sender.sendMessage(noPerm);
 					}
+				} else if (args.length == 1) {
+					if (args[0].equalsIgnoreCase("on")) {
+						// Get a method
 				} else {
-					
+					sender.sendMessage(noPerm);
 				}
+		}
 			}
+		} else if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("off")) {
+				//taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RunnableMessager(), Interval * 1200, Interval * 1200);
+				//plugin.getServer().getScheduler().cancelTask(taskId);
 		} else {
-			
+			sender.sendMessage(noPerm);
+		}
 		}
 		return false;
 	}
-
 }
