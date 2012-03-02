@@ -40,13 +40,15 @@ public class Commands implements CommandExecutor {
 				} else if (args[0].equalsIgnoreCase("on")) {
 					if (sender.hasPermission("zavautomessager.toggle")) {
 						plugin.messageToggle = true;
+						plugin.config.set("enabled", plugin.messageToggle);
+						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now on");
 					} else {
 						sender.sendMessage(noPerm);
-						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now on");
 					}
 				} else if (args[0].equalsIgnoreCase("off")) {
 					if (sender.hasPermission("zavautomessager.toggle")) {
 						plugin.messageToggle = false;
+						plugin.config.set("enabled", plugin.messageToggle);
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now off");
 					} else {
 						sender.sendMessage(noPerm);
