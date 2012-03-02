@@ -38,7 +38,7 @@ public class Main extends JavaPlugin {
 		messageRandom = config.getBoolean("messageinrandomorder");
 		chatFormat = config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
 		delay = delay * 20;
-		permissionsBV = config.getBoolean("permissions", false);
+		permissionsBV = config.getBoolean("permissionsenabled", false);
 		saveConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);

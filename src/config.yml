@@ -4,7 +4,7 @@ enabled: true
 
 delay: 60 # In Seconds
 
-permissions: false # If true, only people with permission can view the message.
+permissionsenabled: false # If true, only people with permission can view the message.
 
 chatformat: '[&6ZavAutoMessager&f]: %msg'
 

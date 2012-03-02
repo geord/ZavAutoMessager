@@ -29,7 +29,7 @@ public class RunnableMessager implements Runnable {
 			} else {
 				plugin.getServer().broadcastMessage(plugin.chatString);	
 			}
-			if (plugin.messageIt == plugin.messages.size()) {
+			if (plugin.messageIt == plugin.messages.size() - 1) {
 				plugin.messageIt = 0;
 			} else {
 				plugin.messageIt = plugin.messageIt + 1;
