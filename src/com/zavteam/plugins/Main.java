@@ -9,16 +9,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-	Random random = new Random();
-	Logger log = Logger.getLogger("Minecraft");
-	protected FileConfiguration config;
-	public List<String> messages = new ArrayList<String>();
-	public int delay;
-	public boolean messageToggle;
-	public int messageIt;
 	public String chatFormat;
 	public String chatString;
+	protected FileConfiguration config;
+	public int delay;
+	Logger log = Logger.getLogger("Minecraft");
+	public int messageIt;
+	public List<String> messages = new ArrayList<String>();
+	public boolean messageRandom;
+	public boolean messageToggle;
 	public boolean permissionsBV;
+	Random random = new Random();
 	RunnableMessager rm = new RunnableMessager(this);
 	@Override
 	public void onDisable() {
@@ -34,6 +35,7 @@ public class Main extends JavaPlugin {
 		messages = config.getStringList("messages");
 		delay = config.getInt("delay", 60);
 		messageToggle = config.getBoolean("enabled", true);
+		messageRandom = config.getBoolean("messageinrandomorder");
 		chatFormat = config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
 		delay = delay * 20;
 		permissionsBV = config.getBoolean("permissions", false);

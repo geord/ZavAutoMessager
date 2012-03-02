@@ -13,7 +13,9 @@ public class RunnableMessager implements Runnable {
 			if (plugin.messages.size() == 1) {
 				plugin.messageIt = 0;
 			} else {
-				plugin.messageIt = plugin.random.nextInt(plugin.messages.size());	
+				if (plugin.messageRandom) {
+					plugin.messageIt = plugin.random.nextInt(plugin.messages.size());
+				}
 			}
 			plugin.chatString = plugin.chatFormat.replace("%msg", plugin.messages.get(plugin.messageIt));
 			plugin.chatString = plugin.chatString.replace("&", "\u00A7");
@@ -26,6 +28,11 @@ public class RunnableMessager implements Runnable {
 				}
 			} else {
 				plugin.getServer().broadcastMessage(plugin.chatString);	
+			}
+			if (plugin.messageIt == plugin.messages.size()) {
+				plugin.messageIt = 0;
+			} else {
+				plugin.messageIt = plugin.messageIt + 1;
 			}
 		}
 	}

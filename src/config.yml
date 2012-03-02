@@ -8,6 +8,8 @@ permissions: false # If true, only people with permission can view the message.
 
 chatformat: '[&6ZavAutoMessager&f]: %msg'
 
+messageinrandomorder: true # Should the messages be displayed in a random order
+
 messages:
     - '&6Example Message'
     - 'Thanks for choosing this plugin :D!'
