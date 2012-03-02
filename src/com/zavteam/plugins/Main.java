@@ -44,6 +44,7 @@ public class Main extends JavaPlugin {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");
 		log.info(this + ": Sending messages is now set to " + messageToggle);
+		log.info("Thank you for using " + this + " by the ZavTeam!");
 	}
 
 }
