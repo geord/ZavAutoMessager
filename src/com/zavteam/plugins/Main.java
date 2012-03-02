@@ -13,6 +13,7 @@ public class Main extends JavaPlugin {
 	public String chatString;
 	protected FileConfiguration config;
 	public int delay;
+	public String freeVariable;
 	Logger log = Logger.getLogger("Minecraft");
 	public int messageIt;
 	public List<String> messages = new ArrayList<String>();

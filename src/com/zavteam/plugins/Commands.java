@@ -13,12 +13,13 @@ public class Commands implements CommandExecutor {
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-			if (args.length == 0) {
+			if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 				if (sender.hasPermission("zavautomessager.view")) {
 					sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
 					sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
 					sender.sendMessage(ChatColor.GOLD + "2. /automessager on - Start the messages");
-					sender.sendMessage(ChatColor.GOLD + "2. /automessager off - Stops the messages");
+					sender.sendMessage(ChatColor.GOLD + "3. /automessager off - Stops the messages");
+					sender.sendMessage(ChatColor.GOLD + "4. /automessager help - Displays this menu");
 					sender.sendMessage(ChatColor.GOLD + "========================================");
 				} else {
 					sender.sendMessage(noPerm);
@@ -53,6 +54,24 @@ public class Commands implements CommandExecutor {
 					} else {
 						sender.sendMessage(noPerm);
 					}
+				} else if (args[0].equalsIgnoreCase("add")) {
+					if (sender.hasPermission("zavautomessager.add")) {
+						if (args.length < 1) {
+							sender.sendMessage(ChatColor.RED + "You need to enter a message to add to the message list.");
+						} else {
+							plugin.freeVariable = "";
+							for (String s : args) {
+								plugin.freeVariable = plugin.freeVariable + s + " ";
+							}
+							plugin.freeVariable = plugin.freeVariable.substring(plugin.freeVariable.length() - 2);
+							plugin.messages.add(plugin.freeVariable);
+							plugin.config.set("messages", plugin.messages);
+						}
+					} else {
+						sender.sendMessage(noPerm);
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");
 				}
 			}
 		return false;
