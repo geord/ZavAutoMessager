@@ -37,7 +37,7 @@ public class Main extends JavaPlugin {
 		delay = config.getInt("delay", 60);
 		messageToggle = config.getBoolean("enabled", true);
 		messageRandom = config.getBoolean("messageinrandomorder");
-		chatFormat = config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
+		chatFormat = config.getString("chatformat", "[&6AutoMessager&f]: %msg");
 		delay = delay * 20;
 		permissionsBV = config.getBoolean("permissionsenabled", false);
 		saveConfig();

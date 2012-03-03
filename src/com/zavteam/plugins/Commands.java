@@ -26,15 +26,18 @@ public class Commands implements CommandExecutor {
 				}
 			} else if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("reload")) {
-					if (sender.hasPermission("zavautomessager.reload")) {
-						plugin.reloadConfig();
-						plugin.messages = plugin.config.getStringList("messages");
-						plugin.delay = plugin.config.getInt("delay", 60);
-						plugin.chatFormat = plugin.config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
-						plugin.delay = plugin.delay * 20;
-						plugin.permissionsBV = plugin.config.getBoolean("permissions", false);
-						plugin.saveConfig();
-						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
+					if (sender.hasPermission("zavautomessager.reload")) { //Still in developement
+						sender.sendMessage(ChatColor.RED + "This feature is not currently available. Sorry :(");
+						//DOESNT WORK FIND WAY TO RELOAD PLUGIN
+						//plugin.reloadConfig();
+						//plugin.messages = plugin.config.getStringList("messages");
+						//plugin.delay = plugin.config.getInt("delay", 60);
+						//plugin.chatFormat = plugin.config.getString("chatformat", "[&6ZavAutoMessager&f]: %msg");
+						//plugin.delay = plugin.delay * 20;
+						//plugin.permissionsBV = plugin.config.getBoolean("permissions", false);
+						//plugin.saveConfig();
+						//sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
+						//DOESNT WORK FIND WAY TO RELOAD PLUGIN
 					} else {
 						sender.sendMessage(noPerm);
 					}
