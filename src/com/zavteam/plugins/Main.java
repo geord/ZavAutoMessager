@@ -47,5 +47,11 @@ public class Main extends JavaPlugin {
 		log.info(this + ": Sending messages is now set to " + messageToggle);
 		log.info("Thank you for using " + this + " by the ZavTeam!");
 	}
+	public void autoReload() {
+		reloadConfig();
+		config = getConfig();
+		config.options().copyDefaults(true);
+		saveConfig();
+	}
 
 }

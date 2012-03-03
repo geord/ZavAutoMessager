@@ -28,11 +28,8 @@ public class Commands implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("reload")) {
 				if (sender.hasPermission("zavautomessager.reload")) {
 					plugin.messageIt = 0;
-					plugin.reloadConfig();
-					plugin.config = plugin.getConfig();
-					plugin.config.options().copyDefaults(true);
+					plugin.autoReload();
 					plugin.messages = plugin.config.getStringList("messages");
-					plugin.saveConfig();
 					sender.sendMessage(ChatColor.RED + "This reload command ONLY affects messages!");
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
@@ -64,18 +61,20 @@ public class Commands implements CommandExecutor {
 				}
 			} else if (args[0].equalsIgnoreCase("add")) {
 				if (sender.hasPermission("zavautomessager.add")) {
-					sender.sendMessage(ChatColor.RED + "This feature is still under developement. Sorry :(");
-					//if (args.length < 1) {
-					//sender.sendMessage(ChatColor.RED + "You need to enter a message to add to the message list.");
-					//} else {
-					//plugin.freeVariable = "";
-					//for (String s : args) {
-					//plugin.freeVariable = plugin.freeVariable + s + " ";
-					//}
-					//plugin.freeVariable = plugin.freeVariable.substring(plugin.freeVariable.length() - 2);
-					//plugin.messages.add(plugin.freeVariable);
-					//plugin.config.set("messages", plugin.messages);
-					//}
+					if (args.length < 2) {
+						sender.sendMessage(ChatColor.RED + "You need to enter a chat message to add.");
+					} else {
+						plugin.freeVariable = "";
+						for (int i = 1; i < args.length; i++) {
+							plugin.freeVariable = plugin.freeVariable + args[i] + " ";
+						}
+						plugin.freeVariable = plugin.freeVariable.substring(0, plugin.freeVariable.length() - 1);
+						plugin.messageIt = 0;
+						plugin.messages.add(plugin.freeVariable);
+						plugin.config.set("messages", plugin.messages);
+						plugin.saveConfig();
+						sender.sendMessage(ChatColor.GREEN + "Your message has been added to the message list.");
+					}
 				} else {
 					sender.sendMessage(noPerm);
 				}
