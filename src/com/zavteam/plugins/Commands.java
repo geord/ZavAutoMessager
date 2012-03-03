@@ -13,69 +13,77 @@ public class Commands implements CommandExecutor {
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-			if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-				if (sender.hasPermission("zavautomessager.view")) {
-					sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
-					sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
-					sender.sendMessage(ChatColor.GOLD + "2. /automessager on - Start the messages");
-					sender.sendMessage(ChatColor.GOLD + "3. /automessager off - Stops the messages");
-					sender.sendMessage(ChatColor.GOLD + "4. /automessager help - Displays this menu");
-					sender.sendMessage(ChatColor.GOLD + "========================================");
+		if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
+			if (sender.hasPermission("zavautomessager.view")) {
+				sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
+				sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
+				sender.sendMessage(ChatColor.GOLD + "2. /automessager on - Start the messages");
+				sender.sendMessage(ChatColor.GOLD + "3. /automessager off - Stops the messages");
+				sender.sendMessage(ChatColor.GOLD + "4. /automessager help - Displays this menu");
+				sender.sendMessage(ChatColor.GOLD + "========================================");
+			} else {
+				sender.sendMessage(noPerm);
+			}
+		} else if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("reload")) {
+				if (sender.hasPermission("zavautomessager.reload")) {
+					plugin.messageIt = 0;
+					plugin.reloadConfig();
+					plugin.config = plugin.getConfig();
+					plugin.config.options().copyDefaults(true);
+					plugin.messages = plugin.config.getStringList("messages");
+					plugin.saveConfig();
+					sender.sendMessage(ChatColor.RED + "This reload command ONLY affects messages!");
+					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
 					sender.sendMessage(noPerm);
 				}
-			} else if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("reload")) {
-					if (sender.hasPermission("zavautomessager.reload")) {
-						plugin.messageIt = 0;
-						plugin.reloadConfig();
-						plugin.config = plugin.getConfig();
-						plugin.config.options().copyDefaults(true);
-						plugin.messages = plugin.config.getStringList("messages");
-						plugin.saveConfig();
-						sender.sendMessage(ChatColor.RED + "This reload command ONLY affects messages!");
-						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
+			} else if (args[0].equalsIgnoreCase("on")) {
+				if (sender.hasPermission("zavautomessager.toggle")) {
+					if (plugin.messageToggle) {
+						sender.sendMessage(ChatColor.RED + "Messages are already enabled");
 					} else {
-						sender.sendMessage(noPerm);
-					}
-				} else if (args[0].equalsIgnoreCase("on")) {
-					if (sender.hasPermission("zavautomessager.toggle")) {
 						plugin.messageToggle = true;
 						plugin.config.set("enabled", plugin.messageToggle);
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now on");
-					} else {
-						sender.sendMessage(noPerm);
 					}
-				} else if (args[0].equalsIgnoreCase("off")) {
-					if (sender.hasPermission("zavautomessager.toggle")) {
+				} else {
+					sender.sendMessage(noPerm);
+				}
+			} else if (args[0].equalsIgnoreCase("off")) {
+				if (sender.hasPermission("zavautomessager.toggle")) {
+					if (!plugin.messageToggle) {
+						sender.sendMessage(ChatColor.RED + "Messages are already disabled");
+					} else {
 						plugin.messageToggle = false;
 						plugin.config.set("enabled", plugin.messageToggle);
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now off");
-					} else {
-						sender.sendMessage(noPerm);
-					}
-				} else if (args[0].equalsIgnoreCase("add")) {
-					if (sender.hasPermission("zavautomessager.add")) {
-						sender.sendMessage(ChatColor.RED + "This feature is still under developement. Sorry :(");
-						//if (args.length < 1) {
-							//sender.sendMessage(ChatColor.RED + "You need to enter a message to add to the message list.");
-						//} else {
-							//plugin.freeVariable = "";
-							//for (String s : args) {
-								//plugin.freeVariable = plugin.freeVariable + s + " ";
-							//}
-							//plugin.freeVariable = plugin.freeVariable.substring(plugin.freeVariable.length() - 2);
-							//plugin.messages.add(plugin.freeVariable);
-							//plugin.config.set("messages", plugin.messages);
-						//}
-					} else {
-						sender.sendMessage(noPerm);
 					}
 				} else {
-					sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");
-					sender.sendMessage(ChatColor.RED + "Use /automessager help to get a list of commands!");
+					sender.sendMessage(noPerm);
 				}
+			} else if (args[0].equalsIgnoreCase("add")) {
+				if (sender.hasPermission("zavautomessager.add")) {
+					sender.sendMessage(ChatColor.RED + "This feature is still under developement. Sorry :(");
+					//if (args.length < 1) {
+					//sender.sendMessage(ChatColor.RED + "You need to enter a message to add to the message list.");
+					//} else {
+					//plugin.freeVariable = "";
+					//for (String s : args) {
+					//plugin.freeVariable = plugin.freeVariable + s + " ";
+					//}
+					//plugin.freeVariable = plugin.freeVariable.substring(plugin.freeVariable.length() - 2);
+					//plugin.messages.add(plugin.freeVariable);
+					//plugin.config.set("messages", plugin.messages);
+					//}
+				} else {
+					sender.sendMessage(noPerm);
+				}
+			} else {
+				sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");
+				sender.sendMessage(ChatColor.RED + "Use /automessager help to get a list of commands!");
 			}
+		}
 		return false;
 	}
 }
