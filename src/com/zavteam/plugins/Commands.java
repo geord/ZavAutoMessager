@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class Commands implements CommandExecutor {
-	private final static String noPerm = ChatColor.RED + "You do not have permission to do this";
+	private final static String noPerm = ChatColor.RED + "You do not have permission to do this.";
 	public Main plugin;
 	public Commands(Main instance) {
 		plugin = instance;
@@ -59,22 +59,24 @@ public class Commands implements CommandExecutor {
 					}
 				} else if (args[0].equalsIgnoreCase("add")) {
 					if (sender.hasPermission("zavautomessager.add")) {
-						if (args.length < 1) {
-							sender.sendMessage(ChatColor.RED + "You need to enter a message to add to the message list.");
-						} else {
-							plugin.freeVariable = "";
-							for (String s : args) {
-								plugin.freeVariable = plugin.freeVariable + s + " ";
-							}
-							plugin.freeVariable = plugin.freeVariable.substring(plugin.freeVariable.length() - 2);
-							plugin.messages.add(plugin.freeVariable);
-							plugin.config.set("messages", plugin.messages);
-						}
+						sender.sendMessage(ChatColor.RED + "This feature is still under developement. Sorry :(");
+						//if (args.length < 1) {
+							//sender.sendMessage(ChatColor.RED + "You need to enter a message to add to the message list.");
+						//} else {
+							//plugin.freeVariable = "";
+							//for (String s : args) {
+								//plugin.freeVariable = plugin.freeVariable + s + " ";
+							//}
+							//plugin.freeVariable = plugin.freeVariable.substring(plugin.freeVariable.length() - 2);
+							//plugin.messages.add(plugin.freeVariable);
+							//plugin.config.set("messages", plugin.messages);
+						//}
 					} else {
 						sender.sendMessage(noPerm);
 					}
 				} else {
 					sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");
+					sender.sendMessage(ChatColor.RED + "Use /automessager help to get a list of commands!");
 				}
 			}
 		return false;
