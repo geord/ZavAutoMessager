@@ -3,6 +3,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Commands implements CommandExecutor {
 	private final static String noPerm = ChatColor.RED + "You do not have permission to do this.";
@@ -18,7 +19,9 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
 				sender.sendMessage(ChatColor.GOLD + "2. /automessager on - Start the messages");
 				sender.sendMessage(ChatColor.GOLD + "3. /automessager off - Stops the messages");
-				sender.sendMessage(ChatColor.GOLD + "4. /automessager help - Displays this menu");
+				sender.sendMessage(ChatColor.GOLD + "4. /automessager add <message> - Adds a message to the list");
+				sender.sendMessage(ChatColor.GOLD + "5. /automessager ignore - Toggles ignoring messages");
+				sender.sendMessage(ChatColor.GOLD + "6. /automessager help - Displays this menu");
 				sender.sendMessage(ChatColor.GOLD + "========================================");
 			} else {
 				sender.sendMessage(noPerm);
@@ -28,8 +31,15 @@ public class Commands implements CommandExecutor {
 				if (sender.hasPermission("zavautomessager.reload")) {
 					plugin.messageIt = 0;
 					plugin.autoReload();
+					plugin.reloadIgnoreConfig();
 					plugin.messages = plugin.config.getStringList("messages");
-					sender.sendMessage(ChatColor.RED + "This reload command ONLY affects messages!");
+					plugin.ignorePlayers = plugin.ignoreConfig.getStringList("players");
+					plugin.messageToggle = plugin.config.getBoolean("enabled", true);
+					plugin.messageRandom = plugin.config.getBoolean("messageinrandomorder");
+					plugin.chatFormat = plugin.config.getString("chatformat", "[&6AutoMessager&f]: %msg");
+					plugin.permissionsBV = plugin.config.getBoolean("permissionsenabled", false);
+					sender.sendMessage(ChatColor.RED + "This is not a full reload.");
+					sender.sendMessage(ChatColor.RED + "To perform a full reload use /reload");
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
 					sender.sendMessage(noPerm);
@@ -74,6 +84,23 @@ public class Commands implements CommandExecutor {
 					}
 				} else {
 					sender.sendMessage(noPerm);
+				}
+			} else if (args[0].equalsIgnoreCase("ignore")) {
+				if (sender instanceof Player) {
+					if (sender.hasPermission("zavautomessager.ignore")) {
+						if (plugin.ignorePlayers.contains(sender.getName())) {
+							plugin.ignorePlayers.remove(sender.getName());
+							sender.sendMessage(ChatColor.GREEN + "You are no longer ignoring automatic messages");
+						} else {
+							plugin.ignorePlayers.add(sender.getName());
+							sender.sendMessage(ChatColor.GREEN + "You are now ignoring automatic messages");
+						}
+						plugin.ignoreConfig.set("players", plugin.ignorePlayers);
+					} else {
+						sender.sendMessage(noPerm);
+					}
+				} else {
+					plugin.log.info("The console cannot use this command.");
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");

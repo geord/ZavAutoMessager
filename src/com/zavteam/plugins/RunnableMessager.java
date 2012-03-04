@@ -21,13 +21,18 @@ public class RunnableMessager implements Runnable {
 			plugin.chatString = plugin.chatString.replace("&", "\u00A7");
 			if (plugin.permissionsBV) {
 				for (Player player : plugin.getServer().getOnlinePlayers()) {
-					if (player.hasPermission("zavautomessager.see")) {
+					if (player.hasPermission("zavautomessager.see") || !(plugin.ignorePlayers.contains(player.getName()))) {
 						player.sendMessage(plugin.chatString);
 					}
 					plugin.log.info(plugin.chatString);
 				}
 			} else {
-				plugin.getServer().broadcastMessage(plugin.chatString);	
+				for (Player player : plugin.getServer().getOnlinePlayers()) {
+					if (!plugin.ignorePlayers.contains(player.getName())) {
+						player.sendMessage(plugin.chatString);
+					}
+				}
+				plugin.log.info(plugin.chatString);
 			}
 			if (plugin.messageIt == plugin.messages.size() - 1) {
 				plugin.messageIt = 0;
