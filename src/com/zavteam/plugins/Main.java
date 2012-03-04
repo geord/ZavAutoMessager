@@ -24,7 +24,7 @@ public class Main extends JavaPlugin {
 	RunnableMessager rm = new RunnableMessager(this);
 	@Override
 	public void onDisable() {
-		saveConfig();
+		autoReload();
 		log.info(this + " has been disabled");
 		
 	}
