@@ -69,11 +69,9 @@ public class Commands implements CommandExecutor {
 						for (int i = 1; i < args.length; i++) {
 							plugin.freeVariable = plugin.freeVariable + args[i] + " ";
 						}
-						plugin.freeVariable = plugin.freeVariable.substring(0, plugin.freeVariable.length() - 1);
+						plugin.freeVariable = plugin.freeVariable.trim();
 						plugin.messageIt = 0;
-						plugin.messages.add(plugin.freeVariable);
-						plugin.config.set("messages", plugin.messages);
-						plugin.saveConfig();
+						plugin.addMessage(plugin.freeVariable);
 						sender.sendMessage(ChatColor.GREEN + "Your message has been added to the message list.");
 						//NOT WORKING! See ^
 					}

@@ -9,17 +9,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-	public String chatFormat;
-	public String chatString;
+	String chatFormat;
+	String chatString;
 	protected FileConfiguration config;
-	public int delay;
-	public String freeVariable;
+	private int delay;
+	String freeVariable;
 	Logger log = Logger.getLogger("Minecraft");
-	public int messageIt;
-	public List<String> messages = new ArrayList<String>();
-	public boolean messageRandom;
-	public boolean messageToggle;
-	public boolean permissionsBV;
+	int messageIt;
+	List<String> messages = new ArrayList<String>();
+	boolean messageRandom;
+	boolean messageToggle;
+	boolean permissionsBV;
 	Random random = new Random();
 	RunnableMessager rm = new RunnableMessager(this);
 	@Override
@@ -47,11 +47,15 @@ public class Main extends JavaPlugin {
 		log.info(this + ": Sending messages is now set to " + messageToggle);
 		log.info("Thank you for using " + this + " by the ZavTeam!");
 	}
-	public void autoReload() {
+	void autoReload() {
 		reloadConfig();
 		config = getConfig();
 		config.options().copyDefaults(true);
 		saveConfig();
 	}
-
+	void addMessage(String m) {
+		messages.add(freeVariable);
+		config.set("messages", messages);
+		saveConfig();
+	}
 }
