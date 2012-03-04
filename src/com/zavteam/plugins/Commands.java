@@ -1,5 +1,4 @@
 package com.zavteam.plugins;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,7 +23,7 @@ public class Commands implements CommandExecutor {
 			} else {
 				sender.sendMessage(noPerm);
 			}
-		} else if (args.length == 1) {
+		} else if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("reload")) {
 				if (sender.hasPermission("zavautomessager.reload")) {
 					plugin.messageIt = 0;
@@ -64,7 +63,6 @@ public class Commands implements CommandExecutor {
 					if (args.length < 2) {
 						sender.sendMessage(ChatColor.RED + "You need to enter a chat message to add.");
 					} else {
-						//NOT WORKING! Try Commenting out each line and see what causes the problem
 						plugin.freeVariable = "";
 						for (int i = 1; i < args.length; i++) {
 							plugin.freeVariable = plugin.freeVariable + args[i] + " ";
@@ -73,7 +71,6 @@ public class Commands implements CommandExecutor {
 						plugin.messageIt = 0;
 						plugin.addMessage(plugin.freeVariable);
 						sender.sendMessage(ChatColor.GREEN + "Your message has been added to the message list.");
-						//NOT WORKING! See ^
 					}
 				} else {
 					sender.sendMessage(noPerm);
