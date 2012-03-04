@@ -17,26 +17,47 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 	String chatFormat;
+	
 	String chatString;
+	
 	protected FileConfiguration config;
+	
 	File ignoreFile;
+	
 	protected FileConfiguration versionConfig;
+	
 	protected FileConfiguration ignoreConfig;
+	
 	private int delay;
+	
 	String freeVariable;
+	
 	Logger log = Logger.getLogger("Minecraft");
+	
 	int messageIt;
+	
 	List<String> messages = new ArrayList<String>();
+	
 	BufferedInputStream versionConfigStream;
+	
 	InputStream defaultIgnoreConfigStream;
+	
 	List<String> ignorePlayers = new ArrayList<String>();
+	
 	boolean messageRandom;
+	
 	YamlConfiguration defaultIgnoreConfig;
+	
 	String version = "v1.7";
+	
 	boolean messageToggle;
+	
 	boolean permissionsBV;
+	
 	Random random = new Random();
+	
 	RunnableMessager rm = new RunnableMessager(this);
+	
 	@Override
 	public void onDisable() {
 		autoReload();
@@ -115,10 +136,10 @@ public class Main extends JavaPlugin {
 		try {
 			versionConfigStream = new BufferedInputStream(new URL("https://sites.google.com/site/zachoooo/version.yml").openStream());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			log.warning("Please Contact the developer regarding this error.");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.warning("Please Contact the developer regarding this error.");
 			e.printStackTrace();
 		}
 		if (versionConfigStream != null) {
