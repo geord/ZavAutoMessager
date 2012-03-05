@@ -60,7 +60,6 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		autoReload();
 		log.info(this + " has been disabled");
 
 	}
@@ -82,6 +81,7 @@ public class Main extends JavaPlugin {
 		saveConfig();
 		saveIgnoreConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
+		getCommand("am").setExecutor(new Commands(this));
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");
 		log.info(this + ": Sending messages is now set to " + messageToggle);
@@ -96,6 +96,14 @@ public class Main extends JavaPlugin {
 		reloadConfig();
 		config = getConfig();
 		config.options().copyDefaults(true);
+		messages = config.getStringList("messages");
+		delay = config.getInt("delay", 60);
+		messageToggle = config.getBoolean("enabled", true);
+		messageRandom = config.getBoolean("messageinrandomorder");
+		chatFormat = config.getString("chatformat", "[&6AutoMessager&f]: %msg");
+		delay = delay * 20;
+		permissionsBV = config.getBoolean("permissionsenabled", false);
+		ignorePlayers = ignoreConfig.getStringList("players");
 		saveConfig();
 	}
 	void addMessage(String m) {

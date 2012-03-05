@@ -32,12 +32,6 @@ public class Commands implements CommandExecutor {
 					plugin.messageIt = 0;
 					plugin.autoReload();
 					plugin.reloadIgnoreConfig();
-					plugin.messages = plugin.config.getStringList("messages");
-					plugin.ignorePlayers = plugin.ignoreConfig.getStringList("players");
-					plugin.messageToggle = plugin.config.getBoolean("enabled", true);
-					plugin.messageRandom = plugin.config.getBoolean("messageinrandomorder");
-					plugin.chatFormat = plugin.config.getString("chatformat", "[&6AutoMessager&f]: %msg");
-					plugin.permissionsBV = plugin.config.getBoolean("permissionsenabled", false);
 					sender.sendMessage(ChatColor.RED + "This is not a full reload.");
 					sender.sendMessage(ChatColor.RED + "To perform a full reload use /reload");
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
@@ -51,6 +45,7 @@ public class Commands implements CommandExecutor {
 					} else {
 						plugin.messageToggle = true;
 						plugin.config.set("enabled", plugin.messageToggle);
+						plugin.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now on");
 					}
 				} else {
@@ -63,6 +58,7 @@ public class Commands implements CommandExecutor {
 					} else {
 						plugin.messageToggle = false;
 						plugin.config.set("enabled", plugin.messageToggle);
+						plugin.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now off");
 					}
 				} else {
@@ -96,6 +92,7 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.GREEN + "You are now ignoring automatic messages");
 						}
 						plugin.ignoreConfig.set("players", plugin.ignorePlayers);
+						plugin.saveConfig();
 					} else {
 						sender.sendMessage(noPerm);
 					}
