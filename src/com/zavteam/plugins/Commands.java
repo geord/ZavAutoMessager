@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.ChatPaginator;
 
 public class Commands implements CommandExecutor {
 	private final static String noPerm = ChatColor.RED + "You do not have permission to do this.";
@@ -21,7 +22,8 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage(ChatColor.GOLD + "3. /automessager off - Stops the messages");
 				sender.sendMessage(ChatColor.GOLD + "4. /automessager add <message> - Adds a message to the list");
 				sender.sendMessage(ChatColor.GOLD + "5. /automessager ignore - Toggles ignoring messages");
-				sender.sendMessage(ChatColor.GOLD + "6. /automessager help - Displays this menu");
+				sender.sendMessage(ChatColor.GOLD + "6. /automessager broadcast <message> - Send a message now");
+				sender.sendMessage(ChatColor.GOLD + "7. /automessager help - Displays this menu");
 				sender.sendMessage(ChatColor.GOLD + "========================================");
 			} else {
 				sender.sendMessage(noPerm);
@@ -98,6 +100,49 @@ public class Commands implements CommandExecutor {
 					}
 				} else {
 					plugin.log.info("The console cannot use this command.");
+				}
+			} else if (args[0].equalsIgnoreCase("broadcast")) {
+				if (sender.hasPermission("zavautomessager.broadcast")) {
+					if (args.length < 2) {
+						sender.sendMessage(ChatColor.RED + "You must enter a broadcast message");
+					} else {
+						for (int i = 1; i < args.length; i++) {
+							plugin.broadcastMessage = plugin.broadcastMessage + args[i] + " ";
+						}
+						plugin.broadcastMessage = plugin.broadcastMessage.trim();
+						plugin.broadcastMessage = plugin.chatFormat.replace("%msg", plugin.broadcastMessage);
+						plugin.broadcastMessage = plugin.broadcastMessage.replace("&", "\u00A7");
+						plugin.cutBroadcastList = ChatPaginator.wordWrap(plugin.broadcastMessage, 53);
+						if (plugin.permissionsBV) {
+							for (Player player : plugin.getServer().getOnlinePlayers()) {
+								if (player.hasPermission("zavautomessager.see") || !(plugin.ignorePlayers.contains(player.getName()))) {
+									if (plugin.chatWrapEnabled) {
+										for (String s : plugin.cutBroadcastList) {
+											player.sendMessage(s);
+										}
+									} else {
+										player.sendMessage(plugin.broadcastMessage);
+									}
+								}
+								plugin.log.info(plugin.broadcastMessage);
+							}
+						} else {
+							for (Player player : plugin.getServer().getOnlinePlayers()) {
+								if (!plugin.ignorePlayers.contains(player.getName())) {
+									if (plugin.chatWrapEnabled) {
+										for (String s : plugin.cutBroadcastList) {
+											player.sendMessage(s);
+										}
+									} else {
+										player.sendMessage(plugin.broadcastMessage);
+									}
+								}
+							}
+							plugin.log.info(plugin.broadcastMessage);
+						}
+					}
+				} else {
+					sender.sendMessage(noPerm);
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");

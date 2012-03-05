@@ -15,7 +15,7 @@ permissionsenabled: false # If true, only people with permission can view the me
 
 chatformat: '[&6AutoMessager&f]: %msg'
 
-messageinrandomorder: true # Should the messages be displayed in a random order
+messageinrandomorder: false # Should the messages be displayed in a random order
 
 messages:
     - '&6Example Message'

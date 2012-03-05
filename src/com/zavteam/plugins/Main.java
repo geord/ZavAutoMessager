@@ -20,6 +20,10 @@ public class Main extends JavaPlugin {
 	
 	String chatString;
 	
+	String broadcastMessage;
+	
+	String[] cutBroadcastList;
+	
 	protected FileConfiguration config;
 	
 	File ignoreFile;
@@ -70,8 +74,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		reloadIgnoreConfig();
 		autoReload();
+		reloadIgnoreConfig();
 		getVersionConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
 		getCommand("am").setExecutor(new Commands(this));
@@ -96,7 +100,6 @@ public class Main extends JavaPlugin {
 		chatFormat = config.getString("chatformat", "[&6AutoMessager&f]: %msg");
 		delay = delay * 20;
 		permissionsBV = config.getBoolean("permissionsenabled", false);
-		ignorePlayers = ignoreConfig.getStringList("players");
 		chatWrapEnabled = config.getBoolean("wordwrap", true);
 		saveConfig();
 	}
