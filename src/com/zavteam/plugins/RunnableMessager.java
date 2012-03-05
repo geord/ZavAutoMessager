@@ -1,6 +1,7 @@
 package com.zavteam.plugins;
 
 import org.bukkit.entity.Player;
+import org.bukkit.util.ChatPaginator;
 
 public class RunnableMessager implements Runnable {
 	public Main plugin;
@@ -19,17 +20,30 @@ public class RunnableMessager implements Runnable {
 			}
 			plugin.chatString = plugin.chatFormat.replace("%msg", plugin.messages.get(plugin.messageIt));
 			plugin.chatString = plugin.chatString.replace("&", "\u00A7");
+			plugin.cutMessageList = ChatPaginator.wordWrap(plugin.chatString, 53);
 			if (plugin.permissionsBV) {
 				for (Player player : plugin.getServer().getOnlinePlayers()) {
 					if (player.hasPermission("zavautomessager.see") || !(plugin.ignorePlayers.contains(player.getName()))) {
-						player.sendMessage(plugin.chatString);
+						if (plugin.chatWrapEnabled) {
+							for (String s : plugin.cutMessageList) {
+								player.sendMessage(s);
+							}
+						} else {
+							player.sendMessage(plugin.chatString);
+						}
 					}
 					plugin.log.info(plugin.chatString);
 				}
 			} else {
 				for (Player player : plugin.getServer().getOnlinePlayers()) {
 					if (!plugin.ignorePlayers.contains(player.getName())) {
-						player.sendMessage(plugin.chatString);
+						if (plugin.chatWrapEnabled) {
+							for (String s : plugin.cutMessageList) {
+								player.sendMessage(s);
+							}
+						} else {
+							player.sendMessage(plugin.chatString);
+						}
 					}
 				}
 				plugin.log.info(plugin.chatString);

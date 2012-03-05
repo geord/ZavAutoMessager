@@ -44,11 +44,15 @@ public class Main extends JavaPlugin {
 	
 	List<String> ignorePlayers = new ArrayList<String>();
 	
+	String[] cutMessageList;
+	
 	boolean messageRandom;
+	
+	boolean chatWrapEnabled;
 	
 	YamlConfiguration defaultIgnoreConfig;
 	
-	String version = "v1.7";
+	String version = "v1.8";
 	
 	boolean messageToggle;
 	
@@ -66,20 +70,9 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		config = getConfig();
-		versionConfig = getVersionConfig();
-		ignoreConfig = getIgnoreConfig();
-		config.options().copyDefaults(true);
-		messages = config.getStringList("messages");
-		delay = config.getInt("delay", 60);
-		messageToggle = config.getBoolean("enabled", true);
-		messageRandom = config.getBoolean("messageinrandomorder");
-		chatFormat = config.getString("chatformat", "[&6AutoMessager&f]: %msg");
-		delay = delay * 20;
-		permissionsBV = config.getBoolean("permissionsenabled", false);
-		ignorePlayers = ignoreConfig.getStringList("players");
-		saveConfig();
-		saveIgnoreConfig();
+		reloadIgnoreConfig();
+		autoReload();
+		getVersionConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
 		getCommand("am").setExecutor(new Commands(this));
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
@@ -104,6 +97,7 @@ public class Main extends JavaPlugin {
 		delay = delay * 20;
 		permissionsBV = config.getBoolean("permissionsenabled", false);
 		ignorePlayers = ignoreConfig.getStringList("players");
+		chatWrapEnabled = config.getBoolean("wordwrap", true);
 		saveConfig();
 	}
 	void addMessage(String m) {
@@ -121,6 +115,8 @@ public class Main extends JavaPlugin {
 			defaultIgnoreConfig = YamlConfiguration.loadConfiguration(defaultIgnoreConfigStream);
 			ignoreConfig.setDefaults(defaultIgnoreConfig);
 		}
+		ignorePlayers = config.getStringList("players");
+		saveIgnoreConfig();
 	}
 	FileConfiguration getIgnoreConfig() {
 		if (ignoreConfig == null) {
