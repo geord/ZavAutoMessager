@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -155,5 +156,34 @@ public class Main extends JavaPlugin {
 			log.warning(this + " was unable to retrieve current version.");
 		}
 		return versionConfig;
+	}
+	void displayMessage(String string, String[] stringArray) {
+		if (permissionsBV) {
+			for (Player player : getServer().getOnlinePlayers()) {
+				if (player.hasPermission("zavautomessager.see") || !(ignorePlayers.contains(player.getName()))) {
+					if (chatWrapEnabled) {
+						for (String s : stringArray) {
+							player.sendMessage(s);
+						}
+					} else {
+						player.sendMessage(string);
+					}
+				}
+				log.info(string);
+			}
+		} else {
+			for (Player player : getServer().getOnlinePlayers()) {
+				if (!ignorePlayers.contains(player.getName())) {
+					if (chatWrapEnabled) {
+						for (String s : stringArray) {
+							player.sendMessage(s);
+						}
+					} else {
+						player.sendMessage(string);
+					}
+				}
+			}
+			log.info(string);
+		}
 	}
 }

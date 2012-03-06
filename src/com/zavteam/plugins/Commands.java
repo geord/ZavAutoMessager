@@ -106,6 +106,7 @@ public class Commands implements CommandExecutor {
 					if (args.length < 2) {
 						sender.sendMessage(ChatColor.RED + "You must enter a broadcast message");
 					} else {
+						plugin.broadcastMessage = "";
 						for (int i = 1; i < args.length; i++) {
 							plugin.broadcastMessage = plugin.broadcastMessage + args[i] + " ";
 						}
@@ -113,33 +114,7 @@ public class Commands implements CommandExecutor {
 						plugin.broadcastMessage = plugin.chatFormat.replace("%msg", plugin.broadcastMessage);
 						plugin.broadcastMessage = plugin.broadcastMessage.replace("&", "\u00A7");
 						plugin.cutBroadcastList = ChatPaginator.wordWrap(plugin.broadcastMessage, 53);
-						if (plugin.permissionsBV) {
-							for (Player player : plugin.getServer().getOnlinePlayers()) {
-								if (player.hasPermission("zavautomessager.see") || !(plugin.ignorePlayers.contains(player.getName()))) {
-									if (plugin.chatWrapEnabled) {
-										for (String s : plugin.cutBroadcastList) {
-											player.sendMessage(s);
-										}
-									} else {
-										player.sendMessage(plugin.broadcastMessage);
-									}
-								}
-								plugin.log.info(plugin.broadcastMessage);
-							}
-						} else {
-							for (Player player : plugin.getServer().getOnlinePlayers()) {
-								if (!plugin.ignorePlayers.contains(player.getName())) {
-									if (plugin.chatWrapEnabled) {
-										for (String s : plugin.cutBroadcastList) {
-											player.sendMessage(s);
-										}
-									} else {
-										player.sendMessage(plugin.broadcastMessage);
-									}
-								}
-							}
-							plugin.log.info(plugin.broadcastMessage);
-						}
+						plugin.displayMessage(plugin.broadcastMessage, plugin.cutBroadcastList);
 					}
 				} else {
 					sender.sendMessage(noPerm);
