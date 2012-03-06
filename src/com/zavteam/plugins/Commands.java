@@ -34,8 +34,6 @@ public class Commands implements CommandExecutor {
 					plugin.messageIt = 0;
 					plugin.autoReload();
 					plugin.reloadIgnoreConfig();
-					sender.sendMessage(ChatColor.RED + "This is not a full reload.");
-					sender.sendMessage(ChatColor.RED + "To perform a full reload use /reload");
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
 					sender.sendMessage(noPerm);
@@ -116,6 +114,15 @@ public class Commands implements CommandExecutor {
 						plugin.cutBroadcastList = ChatPaginator.wordWrap(plugin.broadcastMessage, 53);
 						plugin.displayMessage(plugin.broadcastMessage, plugin.cutBroadcastList);
 					}
+				} else {
+					sender.sendMessage(noPerm);
+				}
+			} else if (args[0].equalsIgnoreCase("about")) {
+				if (sender.hasPermission("zavautomessager.about")) {
+					sender.sendMessage(ChatColor.GOLD + "You are currently running ZavAutoMessage Version " + plugin.getDescription().getVersion() + ".");
+					sender.sendMessage(ChatColor.GOLD + "The latest version is currently version " + plugin.versionConfig.getString("version") + ".");
+					sender.sendMessage(ChatColor.GOLD + "This plugin was developed by the ZavCodingTeam.");
+					sender.sendMessage(ChatColor.GOLD + "Please visit our Bukkit Dev Page for complete details on this plugin.");
 				} else {
 					sender.sendMessage(noPerm);
 				}

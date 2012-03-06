@@ -57,8 +57,6 @@ public class Main extends JavaPlugin {
 	
 	YamlConfiguration defaultIgnoreConfig;
 	
-	String version = "v1.8";
-	
 	boolean messageToggle;
 	
 	boolean permissionsBV;
@@ -80,10 +78,9 @@ public class Main extends JavaPlugin {
 		getVersionConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
 		getCommand("am").setExecutor(new Commands(this));
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 		log.info(this + " has been enabled");
 		log.info(this + ": Sending messages is now set to " + messageToggle);
-		if (!(version.equals(versionConfig.getString("version")))) {
+		if (!(getDescription().getVersion().equals(versionConfig.getString("version")))) {
 			log.info(this + " is not up to date. Check the latest version on BukkitDev.");
 		} else {
 			log.info(this + " is up to date!");
@@ -103,6 +100,8 @@ public class Main extends JavaPlugin {
 		permissionsBV = config.getBoolean("permissionsenabled", false);
 		chatWrapEnabled = config.getBoolean("wordwrap", true);
 		saveConfig();
+		getServer().getScheduler().cancelTasks(this);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 	}
 	void addMessage(String m) {
 		messages.add(freeVariable);
