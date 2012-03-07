@@ -189,8 +189,9 @@ public class Main extends JavaPlugin {
 	}
 	void listPage(int i, CommandSender sender) {
 		sender.sendMessage(ChatColor.GOLD + "ZavAutoMessager Messages Page: " + i);
-		for (int i2 = ((i*5) - 5); i2 > ((i*5) - 1); i2++) {
-			sender.sendMessage(ChatColor.GOLD + String.valueOf(i2) + ". " + messages.get(i2).replace("&", "\u00A7"));
+		int pagenumber = (i-1) * 5;
+		for (int i2 = pagenumber; i2 > (pagenumber + 4); i2++) {
+			sender.sendMessage(ChatColor.GOLD + String.valueOf(i2 + 1) + ". " + messages.get(i2));
 		}
 	}
 }
