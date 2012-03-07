@@ -150,6 +150,27 @@ public class Commands implements CommandExecutor {
 				} else {
 					sender.sendMessage(noPerm);
 				}
+			} else if (args[0].equalsIgnoreCase("list")) {
+				if (sender.hasPermission("zavautomessager.list")) {
+					if (!(args.length > 1)) {
+						plugin.listPage(1, sender);
+						return true;
+					}
+					try {
+						Integer.parseInt(args[1]);
+					} catch (NumberFormatException e) {
+						sender.sendMessage(ChatColor.RED + "You have to enter a round number to show help page.");
+						return false;
+					}
+					if (Integer.parseInt(args[1]) < 1 || Integer.parseInt(args[1]) > Math.ceil(plugin.messages.size() / 5)) {
+						sender.sendMessage(ChatColor.RED + "This is not a valid message number");
+						sender.sendMessage(ChatColor.RED + "Use /automessager list for a list of messages");
+						return false;
+					}
+					plugin.listPage(Integer.parseInt(args[1]), sender);
+				} else {
+					sender.sendMessage(noPerm);
+				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "ZavAutoMessager did not recognize this command.");
 				sender.sendMessage(ChatColor.RED + "Use /automessager help to get a list of commands!");
