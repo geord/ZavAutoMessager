@@ -23,7 +23,8 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage(ChatColor.GOLD + "4. /automessager add <message> - Adds a message to the list");
 				sender.sendMessage(ChatColor.GOLD + "5. /automessager ignore - Toggles ignoring messages");
 				sender.sendMessage(ChatColor.GOLD + "6. /automessager broadcast <message> - Send a message now");
-				sender.sendMessage(ChatColor.GOLD + "7. /automessager help - Displays this menu");
+				sender.sendMessage(ChatColor.GOLD + "7. /automessager about - Displays info about the plugin");
+				sender.sendMessage(ChatColor.GOLD + "8. /automessager help - Displays this menu");
 				sender.sendMessage(ChatColor.GOLD + "========================================");
 			} else {
 				sender.sendMessage(noPerm);
@@ -123,6 +124,29 @@ public class Commands implements CommandExecutor {
 					sender.sendMessage(ChatColor.GOLD + "The latest version is currently version " + plugin.versionConfig.getString("version") + ".");
 					sender.sendMessage(ChatColor.GOLD + "This plugin was developed by the ZavCodingTeam.");
 					sender.sendMessage(ChatColor.GOLD + "Please visit our Bukkit Dev Page for complete details on this plugin.");
+				} else {
+					sender.sendMessage(noPerm);
+				}
+			} else if (args[0].equalsIgnoreCase("remove")) {
+				if (sender.hasPermission("zavautomessager.remove")) {
+					if (args.length < 2) {
+						sender.sendMessage(ChatColor.RED + "You need to enter a message number to delete.");
+					} else {
+						try {
+							Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							sender.sendMessage(ChatColor.RED + "You have to enter a round number to remove.");
+							return false;
+						}
+						if (Integer.parseInt(args[1]) < 0 || Integer.parseInt(args[1]) > plugin.messages.size() || plugin.messages.size() == 1) {
+							sender.sendMessage(ChatColor.RED + "This is not a valid message number");
+							sender.sendMessage(ChatColor.RED + "Use /automessager list for a list of messages");
+						} else {
+							plugin.messages.remove(Integer.parseInt(args[1]));
+							plugin.config.set("messages", plugin.messages);
+							plugin.saveConfig();
+						}
+					}
 				} else {
 					sender.sendMessage(noPerm);
 				}
