@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import com.zavteam.plugins.Main;
 
 public class MainConfig {
+	// Main Config Handlers
 	public Main plugin;
 	private static FileConfiguration config;
 	public MainConfig(Main instance) {
