@@ -8,9 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,12 +16,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.zavteam.plugins.Configs.MainConfig;
+
 public class Main extends JavaPlugin {
-	String chatFormat;
 	
-	String chatString;
+	int delay;
 	
-	String broadcastMessage;
+	boolean messageToggle;
+	
+	List<String> messages = new ArrayList<String>();
 	
 	String[] cutBroadcastList;
 	
@@ -35,15 +36,7 @@ public class Main extends JavaPlugin {
 	
 	protected FileConfiguration ignoreConfig;
 	
-	private int delay;
-	
-	String freeVariable;
-	
 	Logger log = Logger.getLogger("Minecraft");
-	
-	int messageIt;
-	
-	List<String> messages = new ArrayList<String>();
 	
 	BufferedInputStream versionConfigStream;
 	
@@ -53,19 +46,15 @@ public class Main extends JavaPlugin {
 	
 	String[] cutMessageList;
 	
-	boolean messageRandom;
+	String chatFormat;
 	
-	boolean chatWrapEnabled;
+	int messageIt;
 	
 	YamlConfiguration defaultIgnoreConfig;
 	
-	boolean messageToggle;
-	
-	boolean permissionsBV;
-	
-	Random random = new Random();
-	
 	RunnableMessager rm = new RunnableMessager(this);
+	
+	MainConfig MConfig = new MainConfig(this);
 	
 	@Override
 	public void onDisable() {
@@ -93,20 +82,15 @@ public class Main extends JavaPlugin {
 		reloadConfig();
 		config = getConfig();
 		config.options().copyDefaults(true);
-		messages = config.getStringList("messages");
-		delay = config.getInt("delay", 60);
-		messageToggle = config.getBoolean("enabled", true);
-		messageRandom = config.getBoolean("messageinrandomorder");
-		chatFormat = config.getString("chatformat", "[&6AutoMessager&f]: %msg");
-		delay = delay * 20;
-		permissionsBV = config.getBoolean("permissionsenabled", false);
-		chatWrapEnabled = config.getBoolean("wordwrap", true);
+		delay = MConfig.getDelay();
+		messageToggle = MConfig.getEnabled();
+		MConfig.getChatFormat();
 		saveConfig();
 		getServer().getScheduler().cancelTasks(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
 	}
 	void addMessage(String m) {
-		messages.add(freeVariable);
+		messages.add(m);
 		config.set("messages", messages);
 		saveConfig();
 	}
@@ -159,6 +143,8 @@ public class Main extends JavaPlugin {
 		return versionConfig;
 	}
 	void displayMessage(String string, String[] stringArray) {
+		boolean chatWrapEnabled = MConfig.getChatWrap();
+		boolean permissionsBV = MConfig.getPermissionEnabled();
 		if (permissionsBV) {
 			for (Player player : getServer().getOnlinePlayers()) {
 				if (player.hasPermission("zavautomessager.see") || !(ignorePlayers.contains(player.getName()))) {

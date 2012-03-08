@@ -14,6 +14,8 @@ public class Commands implements CommandExecutor {
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		String broadcastMessage;
+		String freeVariable;
 		if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 			if (sender.hasPermission("zavautomessager.view")) {
 				sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
@@ -70,13 +72,13 @@ public class Commands implements CommandExecutor {
 					if (args.length < 2) {
 						sender.sendMessage(ChatColor.RED + "You need to enter a chat message to add.");
 					} else {
-						plugin.freeVariable = "";
+						freeVariable = "";
 						for (int i = 1; i < args.length; i++) {
-							plugin.freeVariable = plugin.freeVariable + args[i] + " ";
+							freeVariable = freeVariable + args[i] + " ";
 						}
-						plugin.freeVariable = plugin.freeVariable.trim();
+						freeVariable = freeVariable.trim();
 						plugin.messageIt = 0;
-						plugin.addMessage(plugin.freeVariable);
+						plugin.addMessage(freeVariable);
 						sender.sendMessage(ChatColor.GREEN + "Your message has been added to the message list.");
 					}
 				} else {
@@ -105,15 +107,15 @@ public class Commands implements CommandExecutor {
 					if (args.length < 2) {
 						sender.sendMessage(ChatColor.RED + "You must enter a broadcast message");
 					} else {
-						plugin.broadcastMessage = "";
+						broadcastMessage = "";
 						for (int i = 1; i < args.length; i++) {
-							plugin.broadcastMessage = plugin.broadcastMessage + args[i] + " ";
+							broadcastMessage = broadcastMessage + args[i] + " ";
 						}
-						plugin.broadcastMessage = plugin.broadcastMessage.trim();
-						plugin.broadcastMessage = plugin.chatFormat.replace("%msg", plugin.broadcastMessage);
-						plugin.broadcastMessage = plugin.broadcastMessage.replace("&", "\u00A7");
-						plugin.cutBroadcastList = ChatPaginator.wordWrap(plugin.broadcastMessage, 53);
-						plugin.displayMessage(plugin.broadcastMessage, plugin.cutBroadcastList);
+						broadcastMessage = broadcastMessage.trim();
+						broadcastMessage = plugin.chatFormat.replace("%msg", broadcastMessage);
+						broadcastMessage = broadcastMessage.replace("&", "\u00A7");
+						plugin.cutBroadcastList = ChatPaginator.wordWrap(broadcastMessage, 53);
+						plugin.displayMessage(broadcastMessage, plugin.cutBroadcastList);
 					}
 				} else {
 					sender.sendMessage(noPerm);
