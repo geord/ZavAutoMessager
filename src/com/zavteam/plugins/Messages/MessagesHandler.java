@@ -1,4 +1,4 @@
-package com.zavteam.plugins.messageshandler;
+package com.zavteam.plugins.Messages;
 
 import com.zavteam.plugins.Main;
 
