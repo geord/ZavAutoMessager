@@ -1,4 +1,4 @@
-package com.zavteam.plugins.Configs;
+package com.zavteam.plugins.configs;
 
 import java.util.List;
 

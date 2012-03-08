@@ -16,7 +16,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.zavteam.plugins.Configs.MainConfig;
+import com.zavteam.plugins.configs.MainConfig;
 
 public class Main extends JavaPlugin {
 	
