@@ -1,4 +1,7 @@
 package com.zavteam.plugins;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +39,7 @@ public class Commands implements CommandExecutor {
 				if (sender.hasPermission("zavautomessager.reload")) {
 					plugin.messageIt = 0;
 					plugin.autoReload();
-					plugin.reloadIgnoreConfig();
+					plugin.IConfig.loadConfig();
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
 					sender.sendMessage(noPerm);
@@ -47,7 +50,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "Messages are already enabled");
 					} else {
 						plugin.messageToggle = true;
-						plugin.config.set("enabled", plugin.messageToggle);
+						plugin.MConfig.set("enabled", plugin.messageToggle);
 						plugin.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now on");
 					}
@@ -60,7 +63,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "Messages are already disabled");
 					} else {
 						plugin.messageToggle = false;
-						plugin.config.set("enabled", plugin.messageToggle);
+						plugin.MConfig.set("enabled", plugin.messageToggle);
 						plugin.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now off");
 					}
@@ -78,23 +81,25 @@ public class Commands implements CommandExecutor {
 						}
 						freeVariable = freeVariable.trim();
 						plugin.messageIt = 0;
-						plugin.addMessage(freeVariable);
+						plugin.MHandler.addMessage(freeVariable);
 						sender.sendMessage(ChatColor.GREEN + "Your message has been added to the message list.");
 					}
 				} else {
 					sender.sendMessage(noPerm);
 				}
 			} else if (args[0].equalsIgnoreCase("ignore")) {
+				List<String> ignorePlayers = new ArrayList<String>();
+				ignorePlayers = plugin.IConfig.getIgnorePlayers();
 				if (sender instanceof Player) {
 					if (sender.hasPermission("zavautomessager.ignore")) {
-						if (plugin.ignorePlayers.contains(sender.getName())) {
-							plugin.ignorePlayers.remove(sender.getName());
+						if (ignorePlayers.contains(sender.getName())) {
+							ignorePlayers.remove(sender.getName());
 							sender.sendMessage(ChatColor.GREEN + "You are no longer ignoring automatic messages");
 						} else {
-							plugin.ignorePlayers.add(sender.getName());
+							ignorePlayers.add(sender.getName());
 							sender.sendMessage(ChatColor.GREEN + "You are now ignoring automatic messages");
 						}
-						plugin.ignoreConfig.set("players", plugin.ignorePlayers);
+						plugin.IConfig.set("players", ignorePlayers);
 						plugin.saveConfig();
 					} else {
 						sender.sendMessage(noPerm);
@@ -103,6 +108,7 @@ public class Commands implements CommandExecutor {
 					plugin.log.info("The console cannot use this command.");
 				}
 			} else if (args[0].equalsIgnoreCase("broadcast")) {
+				String[] cutBroadcastList;
 				if (sender.hasPermission("zavautomessager.broadcast")) {
 					if (args.length < 2) {
 						sender.sendMessage(ChatColor.RED + "You must enter a broadcast message");
@@ -114,8 +120,8 @@ public class Commands implements CommandExecutor {
 						broadcastMessage = broadcastMessage.trim();
 						broadcastMessage = plugin.MConfig.getChatFormat().replace("%msg", broadcastMessage);
 						broadcastMessage = broadcastMessage.replace("&", "\u00A7");
-						plugin.cutBroadcastList = ChatPaginator.wordWrap(broadcastMessage, 53);
-						plugin.displayMessage(broadcastMessage, plugin.cutBroadcastList);
+						cutBroadcastList = ChatPaginator.wordWrap(broadcastMessage, 53);
+						plugin.MHandler.handleMessage(broadcastMessage, cutBroadcastList);
 					}
 				} else {
 					sender.sendMessage(noPerm);
@@ -123,7 +129,7 @@ public class Commands implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("about")) {
 				if (sender.hasPermission("zavautomessager.about")) {
 					sender.sendMessage(ChatColor.GOLD + "You are currently running ZavAutoMessage Version " + plugin.getDescription().getVersion() + ".");
-					sender.sendMessage(ChatColor.GOLD + "The latest version is currently version " + plugin.versionConfig.getString("version") + ".");
+					sender.sendMessage(ChatColor.GOLD + "The latest version is currently version " + plugin.VConfig.getVersion() + ".");
 					sender.sendMessage(ChatColor.GOLD + "This plugin was developed by the ZavCodingTeam.");
 					sender.sendMessage(ChatColor.GOLD + "Please visit our Bukkit Dev Page for complete details on this plugin.");
 				} else {
@@ -145,7 +151,7 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use /automessager list for a list of messages");
 						} else {
 							plugin.messages.remove(Integer.parseInt(args[1]) - 1);
-							plugin.config.set("messages", plugin.messages);
+							plugin.IConfig.set("messages", plugin.messages);
 							plugin.saveConfig();
 							plugin.autoReload();
 						}
@@ -156,7 +162,7 @@ public class Commands implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("list")) {
 				if (sender.hasPermission("zavautomessager.list")) {
 					if (!(args.length > 1)) {
-						plugin.listPage(1, sender);
+						plugin.MHandler.listPage(1, sender);
 						return true;
 					}
 					try {
@@ -165,7 +171,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "You have to enter a valid number to show help page.");
 						return false;
 					}
-					plugin.listPage(Integer.parseInt(args[1]), sender);
+					plugin.MHandler.listPage(Integer.parseInt(args[1]), sender);
 				} else {
 					sender.sendMessage(noPerm);
 				}

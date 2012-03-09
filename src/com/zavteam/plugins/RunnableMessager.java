@@ -30,7 +30,7 @@ public class RunnableMessager implements Runnable {
 			chatString = plugin.MConfig.getChatFormat().replace("%msg", plugin.messages.get(plugin.messageIt));
 			chatString = chatString.replace("&", "\u00A7");
 			cutMessageList = ChatPaginator.wordWrap(chatString, 53);
-			plugin.displayMessage(chatString, cutMessageList);
+			plugin.MHandler.handleMessage(chatString, cutMessageList);
 			if (plugin.messageIt == plugin.messages.size() - 1) {
 				plugin.messageIt = 0;
 			} else {
