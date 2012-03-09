@@ -112,7 +112,7 @@ public class Commands implements CommandExecutor {
 							broadcastMessage = broadcastMessage + args[i] + " ";
 						}
 						broadcastMessage = broadcastMessage.trim();
-						broadcastMessage = plugin.chatFormat.replace("%msg", broadcastMessage);
+						broadcastMessage = plugin.MConfig.getChatFormat().replace("%msg", broadcastMessage);
 						broadcastMessage = broadcastMessage.replace("&", "\u00A7");
 						plugin.cutBroadcastList = ChatPaginator.wordWrap(broadcastMessage, 53);
 						plugin.displayMessage(broadcastMessage, plugin.cutBroadcastList);

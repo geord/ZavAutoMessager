@@ -20,8 +20,6 @@ import com.zavteam.plugins.configs.MainConfig;
 
 public class Main extends JavaPlugin {
 	
-	int delay;
-	
 	boolean messageToggle;
 	
 	List<String> messages = new ArrayList<String>();
@@ -44,10 +42,6 @@ public class Main extends JavaPlugin {
 	
 	List<String> ignorePlayers = new ArrayList<String>();
 	
-	String[] cutMessageList;
-	
-	String chatFormat;
-	
 	int messageIt;
 	
 	YamlConfiguration defaultIgnoreConfig;
@@ -69,8 +63,9 @@ public class Main extends JavaPlugin {
 		getVersionConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
 		getCommand("am").setExecutor(new Commands(this));
+		getServer().getPluginManager().registerEvents(new ZavListener(this), this);
 		log.info(this + " has been enabled");
-		log.info(this + ": Sending messages is now set to " + messageToggle);
+		log.info(this + ": Sending messages is now set to " + MConfig.getEnabled());
 		if (!(getDescription().getVersion().equals(versionConfig.getString("version")))) {
 			log.info(this + " is not up to date. Check the latest version on BukkitDev.");
 		} else {
@@ -82,17 +77,13 @@ public class Main extends JavaPlugin {
 		reloadConfig();
 		config = getConfig();
 		config.options().copyDefaults(true);
-		delay = MConfig.getDelay();
-		messageToggle = MConfig.getEnabled();
-		MConfig.getChatFormat();
 		saveConfig();
 		getServer().getScheduler().cancelTasks(this);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) delay);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) MConfig.getDelay());
 	}
 	void addMessage(String m) {
 		messages.add(m);
-		config.set("messages", messages);
-		saveConfig();
+		MConfig.set("messages", messages);
 	}
 	void reloadIgnoreConfig() {
 		if (ignoreFile == null) {

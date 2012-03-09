@@ -1,5 +1,13 @@
 package com.zavteam.plugins.messageshandler;
 
-public class MessagesHandler {
+import com.zavteam.plugins.Main;
 
+public class MessagesHandler {
+	public Main plugin;
+	public MessagesHandler(Main instance) {
+		plugin = instance;
+	}
+	public void handleMessage(String s, String[] sarray) {
+		
+	}
 }

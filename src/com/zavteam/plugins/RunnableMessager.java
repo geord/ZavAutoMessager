@@ -16,6 +16,8 @@ public class RunnableMessager implements Runnable {
 		
 		String chatString;
 		
+		String[] cutMessageList;
+		
 		boolean messageRandom = plugin.MConfig.getMessageRandom();
 		if (plugin.messageToggle) {
 			if (plugin.messages.size() == 1) {
@@ -25,10 +27,10 @@ public class RunnableMessager implements Runnable {
 					plugin.messageIt = random.nextInt(plugin.messages.size());
 				}
 			}
-			chatString = plugin.chatFormat.replace("%msg", plugin.messages.get(plugin.messageIt));
+			chatString = plugin.MConfig.getChatFormat().replace("%msg", plugin.messages.get(plugin.messageIt));
 			chatString = chatString.replace("&", "\u00A7");
-			plugin.cutMessageList = ChatPaginator.wordWrap(chatString, 53);
-			plugin.displayMessage(chatString, plugin.cutMessageList);
+			cutMessageList = ChatPaginator.wordWrap(chatString, 53);
+			plugin.displayMessage(chatString, cutMessageList);
 			if (plugin.messageIt == plugin.messages.size() - 1) {
 				plugin.messageIt = 0;
 			} else {
