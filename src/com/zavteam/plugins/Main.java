@@ -45,7 +45,6 @@ public class Main extends JavaPlugin {
 		VConfig.loadConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
 		getCommand("am").setExecutor(new Commands(this));
-		getServer().getPluginManager().registerEvents(new ZavListener(this), this);
 		log.info(this + " has been enabled");
 		log.info(this + ": Sending messages is now set to " + MConfig.getEnabled());
 		if (!(getDescription().getVersion().equals(VConfig.getVersion()))) {
