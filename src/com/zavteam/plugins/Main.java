@@ -13,7 +13,7 @@ import com.zavteam.plugins.messageshandler.MessagesHandler;
 
 public class Main extends JavaPlugin {
 	
-	boolean messageToggle;
+	public boolean messageToggle;
 	
 	public List<String> messages = new ArrayList<String>();
 	
@@ -40,6 +40,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		autoReload();
+		messages = MConfig.getMessages();
 		IConfig.loadConfig();
 		VConfig.loadConfig();
 		getCommand("automessager").setExecutor(new Commands(this));
@@ -58,6 +59,6 @@ public class Main extends JavaPlugin {
 		MConfig.loadConfig();
 		saveConfig();
 		getServer().getScheduler().cancelTasks(this);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, (long) MConfig.getDelay());
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, ((long) MConfig.getDelay() * 20));
 	}
 }

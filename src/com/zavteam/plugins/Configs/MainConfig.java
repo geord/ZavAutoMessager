@@ -20,6 +20,7 @@ public class MainConfig {
 		config.options().copyDefaults(true);
 		plugin.saveConfig();
 		upToDate = true;
+		plugin.messageToggle = getEnabled();
 	}
 	public String getChatFormat() {
 		handleUpToDateness();
