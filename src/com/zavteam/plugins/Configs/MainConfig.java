@@ -19,6 +19,7 @@ public class MainConfig {
 		config.options().copyDefaults(true);
 		plugin.saveConfig();
 		plugin.messageToggle = getEnabled();
+		plugin.messages = getMessages();
 	}
 	public String getChatFormat() {
 		return config.getString("chatformat");

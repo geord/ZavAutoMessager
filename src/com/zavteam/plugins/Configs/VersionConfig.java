@@ -27,6 +27,8 @@ public class VersionConfig {
 		} catch (IOException e) {
 			plugin.log.warning("Please Contact the developer regarding this error.");
 			e.printStackTrace();
+		} catch (Exception e) {
+			plugin.log.warning("You may have a problem with your internet. Could not acquire version D:!");
 		}
 		if (versionConfigStream != null) {
 			config = YamlConfiguration.loadConfiguration(versionConfigStream);

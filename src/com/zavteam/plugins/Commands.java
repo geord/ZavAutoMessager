@@ -21,16 +21,20 @@ public class Commands implements CommandExecutor {
 		String freeVariable;
 		if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 			if (sender.hasPermission("zavautomessager.view")) {
-				sender.sendMessage(ChatColor.GOLD + "========= ZavAutoMessager Help =========");
-				sender.sendMessage(ChatColor.GOLD + "1. /automessager reload - Reloads config");
-				sender.sendMessage(ChatColor.GOLD + "2. /automessager on - Start the messages");
-				sender.sendMessage(ChatColor.GOLD + "3. /automessager off - Stops the messages");
-				sender.sendMessage(ChatColor.GOLD + "4. /automessager add <message> - Adds a message to the list");
-				sender.sendMessage(ChatColor.GOLD + "5. /automessager ignore - Toggles ignoring messages");
-				sender.sendMessage(ChatColor.GOLD + "6. /automessager broadcast <message> - Send a message now");
-				sender.sendMessage(ChatColor.GOLD + "7. /automessager about - Displays info about the plugin");
-				sender.sendMessage(ChatColor.GOLD + "8. /automessager help - Displays this menu");
-				sender.sendMessage(ChatColor.GOLD + "========================================");
+				if (args.length == 1 || args.length == 0) {
+					plugin.MHandler.listHelpPage(1, sender);
+				} else {
+					try {
+						Integer.parseInt(args[1]);
+					} catch (NumberFormatException e) {
+						sender.sendMessage(ChatColor.RED + "You need to enter a valid page number to do this.");
+					}
+					if (Integer.parseInt(args[1]) > 0 && Integer.parseInt(args[1]) < 3) {
+						plugin.MHandler.listHelpPage(Integer.parseInt(args[1]), sender);
+					} else {
+						sender.sendMessage(ChatColor.RED + "That is not a valid page number");
+					}
+				}
 			} else {
 				sender.sendMessage(noPerm);
 			}
@@ -39,6 +43,7 @@ public class Commands implements CommandExecutor {
 				if (sender.hasPermission("zavautomessager.reload")) {
 					plugin.messageIt = 0;
 					plugin.autoReload();
+					plugin.MConfig.loadConfig();
 					plugin.IConfig.loadConfig();
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
@@ -151,8 +156,8 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use /automessager list for a list of messages");
 						} else {
 							plugin.messages.remove(Integer.parseInt(args[1]) - 1);
-							plugin.IConfig.set("messages", plugin.messages);
-							plugin.saveConfig();
+							sender.sendMessage(ChatColor.GREEN + "Your message has been removed.");
+							plugin.MConfig.set("messages", plugin.messages);
 							plugin.autoReload();
 						}
 					}
@@ -160,6 +165,12 @@ public class Commands implements CommandExecutor {
 					sender.sendMessage(noPerm);
 				}
 			} else if (args[0].equalsIgnoreCase("list")) {
+				//Command under construction
+				sender.sendMessage(ChatColor.RED + "This command is not yet complete sorry :(");
+				if (plugin.isEnabled()) {
+					return false;
+				}
+				//
 				if (sender.hasPermission("zavautomessager.list")) {
 					if (!(args.length > 1)) {
 						plugin.MHandler.listPage(1, sender);
