@@ -44,6 +44,9 @@ public class MainConfig {
 	public boolean getPermissionEnabled() {
 		return config.getBoolean("permissionsenabled");
 	}
+	public boolean getUpdateChecking() {
+		return config.getBoolean("updatechecking");
+	}
 	public void set(String s, Object o) {
 		config.set(s, o);
 		plugin.saveConfig();

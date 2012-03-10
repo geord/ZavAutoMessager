@@ -16,8 +16,10 @@ public class VersionConfig {
 		plugin = instance;
 	}
 	FileConfiguration config;
-	boolean upToDate;
 	public void loadConfig() {
+		if (!plugin.MConfig.getUpdateChecking()) {
+			return;
+		}
 		BufferedInputStream versionConfigStream = null;
 		try {
 			versionConfigStream = new BufferedInputStream(new URL("https://sites.google.com/site/zachoooo/version.yml").openStream());
@@ -25,24 +27,22 @@ public class VersionConfig {
 			plugin.log.warning("Please Contact the developer regarding this error.");
 			e.printStackTrace();
 		} catch (IOException e) {
-			plugin.log.warning("Please Contact the developer regarding this error.");
-			e.printStackTrace();
+			plugin.log.warning("There is a problem with your internet connection. Cannot get current version.");
+			config = null;
 		} catch (Exception e) {
 			plugin.log.warning("You may have a problem with your internet. Could not acquire version D:!");
+			config = null;
 		}
 		if (versionConfigStream != null) {
 			config = YamlConfiguration.loadConfiguration(versionConfigStream);
 		} else {
-			plugin.log.warning(this + " was unable to retrieve current version.");
+			plugin.log.warning(plugin + " was unable to retrieve current version.");
 		}	
 	}
 	public String getVersion() {
-		handleUpToDateness();
-		return config.getString("version");
-	}
-	public void handleUpToDateness() {
-		if(!upToDate) {
-			loadConfig();
+		if (config == null) {
+			return "-Update Checking Disabled-";
 		}
+		return config.getString("version");
 	}
 }
