@@ -17,7 +17,6 @@ public class Commands implements CommandExecutor {
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		String broadcastMessage;
 		String freeVariable;
 		if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 			if (sender.hasPermission("zavautomessager.view")) {
@@ -113,20 +112,20 @@ public class Commands implements CommandExecutor {
 					plugin.log.info("The console cannot use this command.");
 				}
 			} else if (args[0].equalsIgnoreCase("broadcast")) {
-				String[] cutBroadcastList;
+				String[] cutBroadcastList = new String[10];
 				if (sender.hasPermission("zavautomessager.broadcast")) {
 					if (args.length < 2) {
 						sender.sendMessage(ChatColor.RED + "You must enter a broadcast message");
 					} else {
-						broadcastMessage = "";
+						cutBroadcastList[0] = "";
 						for (int i = 1; i < args.length; i++) {
-							broadcastMessage = broadcastMessage + args[i] + " ";
+							cutBroadcastList[0] = cutBroadcastList[0] + args[i] + " ";
 						}
-						broadcastMessage = broadcastMessage.trim();
-						broadcastMessage = plugin.MConfig.getChatFormat().replace("%msg", broadcastMessage);
-						broadcastMessage = broadcastMessage.replace("&", "\u00A7");
-						cutBroadcastList = ChatPaginator.wordWrap(broadcastMessage, 53);
-						plugin.MHandler.handleMessage(broadcastMessage, cutBroadcastList);
+						cutBroadcastList[0] = cutBroadcastList[0].trim();
+						cutBroadcastList[0] = plugin.MConfig.getChatFormat().replace("%msg", cutBroadcastList[0]);
+						cutBroadcastList[0] = cutBroadcastList[0].replace("&", "\u00A7");
+						cutBroadcastList = ChatPaginator.wordWrap(cutBroadcastList[0], 53);
+						plugin.MHandler.handleMessage(cutBroadcastList);
 					}
 				} else {
 					sender.sendMessage(noPerm);

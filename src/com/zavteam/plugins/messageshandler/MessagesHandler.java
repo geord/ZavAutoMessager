@@ -11,8 +11,7 @@ public class MessagesHandler {
 	public MessagesHandler(Main instance) {
 		plugin = instance;
 	}
-	public void handleMessage(String s, String[] sarray) {
-		boolean chatWrapEnabled = plugin.MConfig.getChatWrap();
+	public void handleMessage(String[] sarray) {
 		boolean permissionsBV = plugin.MConfig.getPermissionEnabled();
 		if (plugin.getServer().getOnlinePlayers().length == 0) {
 			return;
@@ -20,29 +19,21 @@ public class MessagesHandler {
 		if (permissionsBV) {
 			for (Player player : plugin.getServer().getOnlinePlayers()) {
 				if (player.hasPermission("zavautomessager.see") || !(plugin.IConfig.getIgnorePlayers().contains(player.getName()))) {
-					if (chatWrapEnabled) {
-						for (String s1 : sarray) {
-							player.sendMessage(s1);
-						}
-					} else {
-						player.sendMessage(s);
-					}
+					player.sendMessage(sarray);
 				}
-				plugin.log.info(s);
+				for (String s : sarray) {
+					plugin.log.info(s);	
+				}
 			}
 		} else {
 			for (Player player : plugin.getServer().getOnlinePlayers()) {
 				if (!plugin.IConfig.getIgnorePlayers().contains(player.getName())) {
-					if (chatWrapEnabled) {
-						for (String s1 : sarray) {
-							player.sendMessage(s1);
-						}
-					} else {
-						player.sendMessage(s);
-					}
+					player.sendMessage(sarray);
 				}
 			}
-			plugin.log.info(s);
+			for (String s : sarray) {
+				plugin.log.info(s);	
+			}
 		}
 	}
 	public void addMessage(String m) {
