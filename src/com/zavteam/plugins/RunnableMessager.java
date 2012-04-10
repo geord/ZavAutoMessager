@@ -15,7 +15,7 @@ public class RunnableMessager implements Runnable {
 		Random random = new Random();
 		
 		boolean messageRandom = plugin.MConfig.getMessageRandom();
-		if (plugin.messageToggle) {
+		if (plugin.MConfig.getEnabled()) {
 			String[] cutMessageList = new String[10];
 			if (plugin.messages.size() == 1) {
 				plugin.messageIt = 0;

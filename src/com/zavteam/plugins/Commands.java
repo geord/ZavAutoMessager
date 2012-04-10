@@ -42,7 +42,6 @@ public class Commands implements CommandExecutor {
 				if (sender.hasPermission("zavautomessager.reload")) {
 					plugin.messageIt = 0;
 					plugin.autoReload();
-					plugin.MConfig.loadConfig();
 					plugin.IConfig.loadConfig();
 					sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager's config has been reloaded.");
 				} else {
@@ -50,11 +49,11 @@ public class Commands implements CommandExecutor {
 				}
 			} else if (args[0].equalsIgnoreCase("on")) {
 				if (sender.hasPermission("zavautomessager.toggle")) {
-					if (plugin.messageToggle) {
+					if (plugin.MConfig.getEnabled()) {
 						sender.sendMessage(ChatColor.RED + "Messages are already enabled");
 					} else {
-						plugin.messageToggle = true;
-						plugin.MConfig.set("enabled", plugin.messageToggle);
+						plugin.MConfig.set("enabled", true);
+						plugin.MConfig.set("enabled", plugin.MConfig.getEnabled());
 						plugin.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now on");
 					}
@@ -63,11 +62,11 @@ public class Commands implements CommandExecutor {
 				}
 			} else if (args[0].equalsIgnoreCase("off")) {
 				if (sender.hasPermission("zavautomessager.toggle")) {
-					if (!plugin.messageToggle) {
+					if (!plugin.MConfig.getEnabled()) {
 						sender.sendMessage(ChatColor.RED + "Messages are already disabled");
 					} else {
-						plugin.messageToggle = false;
-						plugin.MConfig.set("enabled", plugin.messageToggle);
+						plugin.MConfig.set("enabled", false);
+						plugin.MConfig.set("enabled", plugin.MConfig.getEnabled());
 						plugin.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "ZavAutoMessager is now off");
 					}
@@ -157,6 +156,7 @@ public class Commands implements CommandExecutor {
 							plugin.messages.remove(Integer.parseInt(args[1]) - 1);
 							sender.sendMessage(ChatColor.GREEN + "Your message has been removed.");
 							plugin.MConfig.set("messages", plugin.messages);
+							plugin.messageIt = 0;
 							plugin.autoReload();
 						}
 					}

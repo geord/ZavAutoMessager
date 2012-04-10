@@ -16,9 +16,9 @@ public class MainConfig {
 	public void loadConfig() {
 		plugin.reloadConfig();
 		config = plugin.getConfig();
+		if (!(config == null))
 		config.options().copyDefaults(true);
 		plugin.saveConfig();
-		plugin.messageToggle = getEnabled();
 		plugin.messages = getMessages();
 	}
 	public String getChatFormat() {

@@ -13,8 +13,6 @@ import com.zavteam.plugins.messageshandler.MessagesHandler;
 
 public class Main extends JavaPlugin {
 	
-	public boolean messageToggle;
-	
 	public List<String> messages = new ArrayList<String>();
 	
 	public Logger log = Logger.getLogger("Minecraft");
