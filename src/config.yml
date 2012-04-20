@@ -21,6 +21,8 @@ messageinrandomorder: false # Should the messages be displayed in a random order
 
 updatechecking: true
 
+messagesinconsole: true
+
 messages:
     - '&6Example Message'
     - 'Thanks for choosing this plugin :D!'

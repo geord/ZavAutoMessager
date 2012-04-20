@@ -16,7 +16,7 @@ public class MainConfig {
 	public void loadConfig() {
 		plugin.reloadConfig();
 		config = plugin.getConfig();
-		if (!(config == null))
+		if (!plugin.getDataFolder().exists())
 		config.options().copyDefaults(true);
 		plugin.saveConfig();
 		plugin.messages = getMessages();
@@ -46,6 +46,9 @@ public class MainConfig {
 	}
 	public boolean getUpdateChecking() {
 		return config.getBoolean("updatechecking");
+	}
+	public boolean getMessagesInConsole() {
+		return config.getBoolean("messagesinconsole");
 	}
 	public void set(String s, Object o) {
 		config.set(s, o);
