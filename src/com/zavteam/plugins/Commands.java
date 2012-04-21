@@ -171,7 +171,7 @@ public class Commands implements CommandExecutor {
 				}
 				//
 				if (sender.hasPermission("zavautomessager.list")) {
-					if (!(args.length > 1)) {
+					if (args.length < 1) {
 						plugin.MHandler.listPage(1, sender);
 						return true;
 					}

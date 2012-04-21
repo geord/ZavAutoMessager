@@ -16,8 +16,9 @@ public class MainConfig {
 	public void loadConfig() {
 		plugin.reloadConfig();
 		config = plugin.getConfig();
-		if (!plugin.getDataFolder().exists())
+		if (!plugin.getDataFolder().exists()) {
 		config.options().copyDefaults(true);
+		}
 		plugin.saveConfig();
 		plugin.messages = getMessages();
 	}

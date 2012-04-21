@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.zavteam.plugins.configs.GroupConfig;
 import com.zavteam.plugins.configs.IgnoreConfig;
 import com.zavteam.plugins.configs.MainConfig;
 import com.zavteam.plugins.configs.VersionConfig;
@@ -22,6 +23,8 @@ public class Main extends JavaPlugin {
 	RunnableMessager rm = new RunnableMessager(this);
 	
 	public MainConfig MConfig = new MainConfig(this);
+	
+	public GroupConfig GConfig = new GroupConfig(this);
 	
 	public IgnoreConfig IConfig = new IgnoreConfig(this);
 	
@@ -54,7 +57,6 @@ public class Main extends JavaPlugin {
 	}
 	void autoReload() {
 		MConfig.loadConfig();
-		saveConfig();
 		getServer().getScheduler().cancelTasks(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, ((long) MConfig.getDelay() * 20));
 	}

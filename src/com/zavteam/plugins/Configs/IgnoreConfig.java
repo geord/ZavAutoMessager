@@ -17,7 +17,6 @@ public class IgnoreConfig {
 	}
 	File ignoreFile;
 	private FileConfiguration config;
-	boolean upToDate;
 	public void loadConfig() {
 		InputStream defaultIgnoreConfigStream;
 		if (ignoreFile == null) {
@@ -43,14 +42,7 @@ public class IgnoreConfig {
 		}
 	}
 	public List<String> getIgnorePlayers() {
-		handleUpToDateness();
 		return config.getStringList("players");
-	}
-	private void handleUpToDateness() {
-		if (upToDate) {
-			return;
-		}
-		loadConfig();
 	}
 	public void set(String s, Object o) {
 		config.set(s, o);
