@@ -42,6 +42,9 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		autoReload();
 		messages = MConfig.getMessages();
+		if (MConfig.getGroupBasedMessaging()) {
+			GConfig.loadConfig();
+		}
 		IConfig.loadConfig();
 		VConfig.loadConfig();
 		getCommand("automessager").setExecutor(new Commands(this));

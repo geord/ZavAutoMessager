@@ -51,6 +51,9 @@ public class MainConfig {
 	public boolean getMessagesInConsole() {
 		return config.getBoolean("messagesinconsole");
 	}
+	public boolean getGroupBasedMessaging() {
+		return config.getBoolean("groupbasedmessaging");
+	}
 	public void set(String s, Object o) {
 		config.set(s, o);
 		plugin.saveConfig();
