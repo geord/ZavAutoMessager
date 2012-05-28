@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.zavteam.plugins.configs.GroupConfig;
 import com.zavteam.plugins.configs.IgnoreConfig;
 import com.zavteam.plugins.configs.MainConfig;
 import com.zavteam.plugins.configs.VersionConfig;
@@ -16,15 +15,13 @@ public class Main extends JavaPlugin {
 	
 	public List<String> messages = new ArrayList<String>();
 	
-	public Logger log = Logger.getLogger("Minecraft");
+	public Logger log = this.getLogger();
 	
 	int messageIt;
 	
 	RunnableMessager rm = new RunnableMessager(this);
 	
 	public MainConfig MConfig = new MainConfig(this);
-	
-	public GroupConfig GConfig = new GroupConfig(this);
 	
 	public IgnoreConfig IConfig = new IgnoreConfig(this);
 	
@@ -42,9 +39,6 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		autoReload();
 		messages = MConfig.getMessages();
-		if (MConfig.getGroupBasedMessaging()) {
-			GConfig.loadConfig();
-		}
 		IConfig.loadConfig();
 		VConfig.loadConfig();
 		getCommand("automessager").setExecutor(new Commands(this));

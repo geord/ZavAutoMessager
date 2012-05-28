@@ -15,17 +15,8 @@ public class MainConfig {
 	}
 	public void loadConfig() {
 		plugin.reloadConfig();
-		try {
-		config = plugin.getConfig();
-		} catch (Exception e) {
-			e.printStackTrace();
-			plugin.log.severe("There was an error in the config and this plugin is shutting down to prevent damages.");
-			plugin.log.severe("Please check the console error and your config for errors.");
-			plugin.disableZavAutoMessager();
-		}
-		if (!plugin.getDataFolder().exists()) {
+			config = plugin.getConfig();
 		config.options().copyDefaults(true);
-		}
 		plugin.saveConfig();
 		plugin.messages = getMessages();
 	}
