@@ -21,11 +21,6 @@ public class MessagesHandler {
 				if (player.hasPermission("zavautomessager.see") || !(plugin.IConfig.getIgnorePlayers().contains(player.getName()))) {
 					player.sendMessage(sarray);
 				}
-				if (plugin.MConfig.getMessagesInConsole()) {
-					for (String s : sarray) {
-						plugin.log.info(s);	
-					}
-				}
 			}
 		} else {
 			for (Player player : plugin.getServer().getOnlinePlayers()) {
@@ -33,10 +28,10 @@ public class MessagesHandler {
 					player.sendMessage(sarray);
 				}
 			}
-			if (plugin.MConfig.getMessagesInConsole()) {
-				for (String s : sarray) {
-					plugin.log.info(s);	
-				}
+		}
+		if (plugin.MConfig.getMessagesInConsole()) {
+			for (String s : sarray) {
+				plugin.log.info(s);	
 			}
 		}
 	}

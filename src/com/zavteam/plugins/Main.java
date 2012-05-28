@@ -58,9 +58,12 @@ public class Main extends JavaPlugin {
 		}
 		log.info("Thank you for using " + this + " by the ZavTeam!");
 	}
-	void autoReload() {
+	public void autoReload() {
 		MConfig.loadConfig();
 		getServer().getScheduler().cancelTasks(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, rm, 0L, ((long) MConfig.getDelay() * 20));
+	}
+	public void disableZavAutoMessager() {
+		setEnabled(false);
 	}
 }
